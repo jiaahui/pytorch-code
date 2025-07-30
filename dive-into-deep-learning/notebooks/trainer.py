@@ -106,9 +106,10 @@ def train_v2(net, train_iter, test_iter, num_epochs, lr, device):
             train_acc = metric[1] / metric[2]
 
             if (i + 1) % (num_batches // 5) == 0 or i == num_batches - 1:
-                animator.add(epoch + (i + 1) / num_batches,
-                             (train_l, train_acc, None))
+                animator.add(epoch + (i + 1) / num_batches, (train_l, train_acc, None))
+        
         test_acc = evaluate_accuracy_gpu(net, test_iter)
         animator.add(epoch + 1, (None, None, test_acc))
+        
     print(f'loss:\t {train_l:.3f}\t train acc:\t {train_acc:.3f}\t test acc: {test_acc:.3f}', end="\t")
     print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec on {str(device)}')
